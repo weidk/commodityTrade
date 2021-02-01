@@ -1,0 +1,213 @@
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\FutureClient.exe.config
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\FutureClient.exe
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\FutureClient.pdb
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient.csprojAssemblyReference.cache
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\MainWindow.g.cs
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\App.g.cs
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient_MarkupCompile.cache
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient_MarkupCompile.lref
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\MainWindow.baml
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient.g.resources
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient.Properties.Resources.resources
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient.csproj.GenerateResource.cache
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient.exe
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient.pdb
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\MaterialDesignColors.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\MaterialDesignThemes.Wpf.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\MaterialDesignColors.pdb
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\App.baml
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient.csproj.CopyComplete
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\CommonServiceLocator.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\FutureMQClient.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Extras.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Platform.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\Microsoft.Diagnostics.Tracing.EventSource.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\Newtonsoft.Json.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\RabbitMQ.Client.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\SqlSugar.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Windows.Interactivity.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\FutureMQClient.pdb
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\FutureMQClient.dll.config
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.pdb
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Extras.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Platform.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\Microsoft.Diagnostics.Tracing.EventSource.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\Newtonsoft.Json.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\RabbitMQ.Client.xml
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient.exe.config
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\FutureClient.exe.manifest
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\FutureClient.application
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient.exe.manifest
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient.application
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\Login.g.cs
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\Login.baml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\config.xml
+D:\workspace\交易接口\总线\FutureClient\obj\Debug\FutureClient_Content.g.cs
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Memory.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Threading.Channels.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\Pipelines.Sockets.Unofficial.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.IO.Pipelines.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Buffers.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Numerics.Vectors.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\StackExchange.Redis.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Memory.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Threading.Channels.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\Pipelines.Sockets.Unofficial.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.IO.Pipelines.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Buffers.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Numerics.Vectors.xml
+D:\workspace\交易接口\总线\FutureClient\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\config.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\FutureClient.exe.config
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\FutureClient.exe.manifest
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\FutureClient.application
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\FutureClient.exe
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\FutureClient.pdb
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\CommonServiceLocator.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\FutureMQClient.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Extras.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Platform.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\MaterialDesignColors.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\MaterialDesignThemes.Wpf.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\Microsoft.Diagnostics.Tracing.EventSource.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\Newtonsoft.Json.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\RabbitMQ.Client.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\SqlSugar.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Windows.Interactivity.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Memory.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Threading.Channels.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\Pipelines.Sockets.Unofficial.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.IO.Pipelines.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Buffers.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Numerics.Vectors.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\FutureMQClient.pdb
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\FutureMQClient.dll.config
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.pdb
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Extras.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\GalaSoft.MvvmLight.Platform.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\MaterialDesignColors.pdb
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\Microsoft.Diagnostics.Tracing.EventSource.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\Newtonsoft.Json.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\RabbitMQ.Client.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\StackExchange.Redis.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Memory.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Threading.Channels.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\Pipelines.Sockets.Unofficial.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.IO.Pipelines.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Buffers.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Numerics.Vectors.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient.csprojAssemblyReference.cache
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient.exe.config
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\Login.g.cs
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\MainWindow.g.cs
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\App.g.cs
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient_Content.g.cs
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient_MarkupCompile.cache
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient_MarkupCompile.lref
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\App.baml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\Login.baml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\MainWindow.baml
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient.g.resources
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient.Properties.Resources.resources
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient.csproj.GenerateResource.cache
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient.exe.manifest
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient.application
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient.csproj.CopyComplete
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient.exe
+D:\workspace\交易接口\OneDrive - Lolihub\总线\FutureClient\obj\Debug\FutureClient.pdb
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\config.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\FutureClient.exe.config
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\FutureClient.exe.manifest
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\FutureClient.application
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\FutureClient.exe
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\FutureClient.pdb
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\CommonServiceLocator.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\FutureMQClient.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\GalaSoft.MvvmLight.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\GalaSoft.MvvmLight.Extras.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\GalaSoft.MvvmLight.Platform.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\MaterialDesignColors.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\MaterialDesignThemes.Wpf.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\Microsoft.Diagnostics.Tracing.EventSource.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\Newtonsoft.Json.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\RabbitMQ.Client.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\SqlSugar.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Windows.Interactivity.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Memory.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Threading.Channels.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\Pipelines.Sockets.Unofficial.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.IO.Pipelines.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Buffers.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Numerics.Vectors.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\FutureMQClient.pdb
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\FutureMQClient.dll.config
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\GalaSoft.MvvmLight.pdb
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\GalaSoft.MvvmLight.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\GalaSoft.MvvmLight.Extras.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\GalaSoft.MvvmLight.Platform.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\MaterialDesignColors.pdb
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\Microsoft.Diagnostics.Tracing.EventSource.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\Newtonsoft.Json.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\RabbitMQ.Client.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\StackExchange.Redis.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Memory.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Threading.Channels.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\Pipelines.Sockets.Unofficial.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.IO.Pipelines.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Buffers.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Numerics.Vectors.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient.csprojAssemblyReference.cache
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient.exe.config
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\Login.g.cs
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\MainWindow.g.cs
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\App.g.cs
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient_Content.g.cs
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient_MarkupCompile.cache
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient_MarkupCompile.lref
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\App.baml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\Login.baml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\MainWindow.baml
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient.g.resources
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient.Properties.Resources.resources
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient.csproj.GenerateResource.cache
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient.exe.manifest
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient.application
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient.csproj.CopyComplete
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient.exe
+D:\workspace\OneDrive - Lolihub\总线\Client_COMMODITY\FutureClient\obj\Debug\FutureClient.pdb

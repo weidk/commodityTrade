@@ -1,0 +1,1181 @@
+﻿<Window x:Class="FutureClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FutureClient"
+        xmlns:converter="clr-namespace:FutureClient.Converter"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:validationrules="clr-namespace:FutureClient.ValidationRules"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="{Binding MainTitle}" Height="800" Width="1200" MinHeight="800" MinWidth="1200" Icon="icon.ico" Closing="OnClosing" Loaded="Window_Loaded">
+    <Window.Resources>
+        <converter:FutureNameConverter  x:Key="fnConverter"/>
+        <converter:DirectionConverter  x:Key="directionConverter"/>
+        <converter:ValueConverter  x:Key="valueConverter"/>
+
+        <CollectionViewSource x:Key="AccountView" Source="{Binding AccountIpList}"   Filter="CollectionViewSource_FilterAccount" />
+        <CollectionViewSource x:Key="FinishedView" Source="{Binding ExpiredlatestIpList}"   Filter="CollectionViewSource_FilterFinish" />
+        <CollectionViewSource x:Key="ToDealsView" Source="{Binding LatestIpList}"   Filter="CollectionViewSource_FilterToDeals" />
+        <CollectionViewSource x:Key="PairsView" Source="{Binding PairList}"   Filter="Pairs_Filter" />
+
+
+        <Style x:Key="TabControlWithUnderLineStyle" TargetType="{x:Type TabControl}">
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid x:Name="templateRoot" ClipToBounds="True" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="ColumnDefinition0"/>
+                                <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                                <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TabPanel x:Name="HeaderPanel" HorizontalAlignment="Center" Background="Transparent" Grid.Column="0" IsItemsHost="True" Margin="0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+                            <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Stroke="Gray" StrokeThickness="0.1" VerticalAlignment="Bottom" Margin="0 0 0 1" SnapsToDevicePixels="True"/>
+                            <Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+                                <ContentPresenter x:Name="PART_SelectedContentHost" ContentTemplate="{TemplateBinding SelectedContentTemplate}" Content="{TemplateBinding SelectedContent}" ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" ContentSource="SelectedContent" Margin="0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="TabStripPlacement" Value="Bottom">
+                                <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="1"/>
+                                <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Left">
+                                <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+                                <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="HeaderPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="ContentPanel" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Right">
+                                <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+                                <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="HeaderPanel" Value="1"/>
+                                <Setter Property="Grid.Column" TargetName="ContentPanel" Value="0"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TabItemExWithUnderLineStyle"  TargetType="{x:Type TabItem}">
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Foreground" Value="#BEBEBE"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#FFACAC"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid x:Name="templateRoot"  SnapsToDevicePixels="True" Background="Transparent">
+                            <Border x:Name="_underline" BorderBrush="White" BorderThickness="0" Margin="{TemplateBinding Margin}"/>
+                            <Grid>
+                                <TextBlock x:Name="txt" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding Header}" ToolTip="{TemplateBinding Header}" Foreground="{TemplateBinding Foreground}" TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="TabItem.IsSelected" Value="True">
+                                <Setter Property="TabItem.FontWeight" Value="Bold"/>
+                                <Setter Property="TabItem.Foreground" Value="Black"/>
+                            </Trigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Foreground" TargetName="txt" Value="#FFFFFF"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="templateRoot" Value="0.56"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="templateRoot" Value="0.56"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="templateRoot" Value="0.56"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="templateRoot" Value="0.56"/>
+                            </MultiDataTrigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Foreground" TargetName="txt" Value="#FFFFFF"/>
+                                <Setter Property="BorderThickness" TargetName="_underline" Value="0 0 0 2"/>
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <Style x:Key="TabItemStyle" TargetType="{x:Type TabItem}">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="False">
+                    <Setter Property="Foreground" Value="Gray"/>
+                    <Setter Property="TabItem.FontWeight" Value="Light"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="#632dc1"/>
+                    <Setter Property="TabItem.FontWeight" Value="Bold"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#632dc1"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontSize" Value="22"/>
+
+        </Style>
+
+
+
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="166*"/>
+            <ColumnDefinition Width="82*"/>
+            <ColumnDefinition Width="61*"/>
+            <ColumnDefinition Width="86*"/>
+            <ColumnDefinition Width="797*"/>
+        </Grid.ColumnDefinitions>
+
+        <TabControl Style="{StaticResource TabControlWithUnderLineStyle}"   Background="#FF632DC1" BorderBrush="Transparent" BorderThickness="0" SelectionChanged="TabControl_SelectionChanged" Grid.ColumnSpan="2" >
+            <TabItem Name="DirectionItem" Width="88" Header="方向" Height="50" Style="{StaticResource TabItemExWithUnderLineStyle}" Cursor="Hand" >
+                <Grid Background="White">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="14*"/>
+                            <RowDefinition Height="0*"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderThickness="1" BorderBrush="{Binding TraderColor}">
+                            <DockPanel Margin="2 10 0 0">
+
+                                <Grid Margin="5 10 5 10" DockPanel.Dock="Top">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="10*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="6*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="自動開平" Grid.Row="0" Margin="4"/>
+                                    <RadioButton GroupName="TradeSide" x:Name="buyRadio"  Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignTabRadioButton}" Background="#FF4500" Margin="4" IsChecked="True" Content="买入" Checked="TradeSideRadioButtonChecked"  />
+                                    <RadioButton GroupName="TradeSide" x:Name="sellRadio" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignTabRadioButton}" Background="#DCDCDC" Margin="4" IsChecked="False" Content="卖出" Checked="TradeSideRadioButtonChecked"/>
+
+                                    <TextBlock Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="手動開平" Grid.Row="2" Margin="4"/>
+                                    <RadioButton GroupName="TradeSide" x:Name="buyOpen" Grid.Column="0" Grid.Row="3"  Style="{StaticResource MaterialDesignTabRadioButton}" Background="#DCDCDC" Margin="4" IsChecked="False" Content="买入开仓" Checked="TradeSideRadioButtonChecked"/>
+                                    <RadioButton GroupName="TradeSide" x:Name="buyClose" Grid.Column="1" Grid.Row="3"  Style="{StaticResource MaterialDesignTabRadioButton}" Background="#DCDCDC" Margin="4" IsChecked="False" Content="买入平仓" Checked="TradeSideRadioButtonChecked"/>
+                                    <RadioButton GroupName="TradeSide" x:Name="sellOpen" Grid.Column="2" Grid.Row="3"  Style="{StaticResource MaterialDesignTabRadioButton}" Background="#DCDCDC" Margin="4" IsChecked="False" Content="卖出开仓" Checked="TradeSideRadioButtonChecked"/>
+                                    <RadioButton GroupName="TradeSide" x:Name="sellClose" Grid.Column="3" Grid.Row="3"  Style="{StaticResource MaterialDesignTabRadioButton}" Background="#DCDCDC" Margin="4" IsChecked="False" Content="卖出平仓" Checked="TradeSideRadioButtonChecked"/>
+                                </Grid>
+                                <DockPanel Margin="5 10 5 0" DockPanel.Dock="Top">
+                                    <TextBlock DockPanel.Dock="Left" Text="代碼:" FontSize="20" Foreground="Black" Margin="0 0 25 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <ComboBox materialDesign:HintAssist.Hint="请选择证券代码" 
+                                          materialDesign:HintAssist.HintOpacity=".26"      
+                                          x:Name="codeCoboBox"
+                                          Foreground="Black"
+                                          ItemsSource="{Binding CodeList}"
+                                          SelectedItem="{Binding SelectedCodeItem}"
+                                          TextSearch.TextPath="Code"
+                                          IsEditable="True" SelectionChanged="codeCoboBox_SelectionChanged"
+                                          >
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--<VirtualizingStackPanel Orientation="Horizontal">-->
+                                                <DockPanel LastChildFill="False">
+                                                    <TextBlock  DockPanel.Dock="Left" Text="{Binding Code}" FontSize="15"/>
+                                                    <TextBlock  DockPanel.Dock="Right" Text="{Binding Name}" FontSize="15"/>
+                                                </DockPanel>
+                                                <!--</VirtualizingStackPanel>-->
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </DockPanel>
+                                <DockPanel Margin="5 10 5 0" DockPanel.Dock="Top">
+                                    <TextBlock DockPanel.Dock="Left" Text="价格:" FontSize="20" Foreground="Black" Margin="0 0 25 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBox x:Name="inputPrice" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" PreviewKeyDown="inputPrice_PreviewKeyDown">
+                                        <TextBox.Text>
+                                            <Binding  Path="Price"  UpdateSourceTrigger="PropertyChanged">
+                                                <!--<Binding.ValidationRules>
+                                                    <validationrules:NumberValidation ValidType="price"  Ticks="0.005" Min="80" Max="120"  />
+                                                </Binding.ValidationRules>-->
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </DockPanel>
+
+                                <DockPanel Margin="5 10 5 0" DockPanel.Dock="Top">
+                                    <TextBlock DockPanel.Dock="Left" Text="数量:" FontSize="20" Foreground="Black" Margin="0 0 25 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" x:Name="DirectionAmt">
+                                        <TextBox.Text>
+                                            <Binding  Path="Amount"  UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validationrules:NumberValidation ValidType="amount" Ticks="1" Min="1" Max="50"  />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </DockPanel>
+                                <StackPanel Height="34" />
+                                <Button materialDesign:ButtonAssist.CornerRadius="10" Background="{Binding TraderColor}" DockPanel.Dock="Bottom" Command="{Binding CommonNewOrderCommand}">提交訂單</Button>
+                            </DockPanel>
+                        </Border>
+                        <GroupBox Grid.Row="1" 
+                                  Header="{Binding ShowHQ.SCode}" 
+                                  Style="{DynamicResource MaterialDesignGroupBox}"
+                                  Margin="0"
+                                  UseLayoutRounding="True"
+                                  SnapsToDevicePixels="True">
+                            <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth4" materialDesign:ShadowAssist.ShadowEdges="Bottom,Left" Padding="5">
+                                <Grid Margin="0,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="12*"/>
+                                        <RowDefinition Height="12*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <DockPanel LastChildFill="False" Margin="10,2,10,2">
+                                        <Grid DockPanel.Dock="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="卖一" Grid.Column="0" Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelPrice1}" Grid.Column="1"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelVol1}"  Grid.Column="2"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#2E8B57"/>
+                                        </Grid>
+                                        <!--<Grid DockPanel.Dock="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="卖二" Grid.Column="0"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelPrice2}" Grid.Column="1"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelVol2}"  Grid.Column="2"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#2E8B57"/>
+                                        </Grid>
+                                        <Grid DockPanel.Dock="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="卖二" Grid.Column="0"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelPrice2}" Grid.Column="1"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelVol2}"  Grid.Column="2"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#2E8B57"/>
+                                        </Grid>
+                                        <Grid DockPanel.Dock="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="卖三" Grid.Column="0"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelPrice3}" Grid.Column="1"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelVol3}"  Grid.Column="2"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#2E8B57"/>
+                                        </Grid>
+                                        <Grid DockPanel.Dock="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="卖四" Grid.Column="0"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelPrice4}" Grid.Column="1"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelVol4}"  Grid.Column="2"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#2E8B57"/>
+                                        </Grid>
+                                        <Grid DockPanel.Dock="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="卖五" Grid.Column="0"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelPrice5}" Grid.Column="1"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.SelVol5}"  Grid.Column="2"  Foreground="#2E8B57"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#2E8B57"/>
+                                        </Grid>-->
+                                    </DockPanel>
+
+                                    <DockPanel LastChildFill="False" Margin="10,2,10,2" Grid.Row="1">
+                                        <Grid DockPanel.Dock="Top">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="买一" Grid.Column="0" Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyPrice1}" Grid.Column="1"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyVol1}"  Grid.Column="2"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#FF4500"/>
+                                        </Grid>
+                                        <!--<Grid DockPanel.Dock="Top">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="买二" Grid.Column="0"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyPrice2}" Grid.Column="1"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyVol2}"  Grid.Column="2"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#FF4500"/>
+                                        </Grid>
+                                        <Grid DockPanel.Dock="Top">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="买二" Grid.Column="0"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyPrice2}" Grid.Column="1"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyVol2}"  Grid.Column="2"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#FF4500"/>
+                                        </Grid>
+                                        <Grid DockPanel.Dock="Top">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="买三" Grid.Column="0"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyPrice3}" Grid.Column="1"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyVol3}"  Grid.Column="2"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#FF4500"/>
+                                        </Grid>
+                                        <Grid DockPanel.Dock="Top">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="买四" Grid.Column="0"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyPrice4}" Grid.Column="1"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyVol4}"  Grid.Column="2"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#FF4500"/>
+                                        </Grid>
+                                        <Grid DockPanel.Dock="Top">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="买五" Grid.Column="0"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyPrice5}" Grid.Column="1"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding ShowHQ.BuyVol5}"  Grid.Column="2"  Foreground="#FF4500"/>
+                                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="手"  Grid.Column="3"  Foreground="#FF4500"/>
+                                        </Grid>-->
+                                    </DockPanel>
+
+
+                                </Grid>
+                            </materialDesign:Card>
+
+
+                        </GroupBox>
+                        <Border BorderThickness="1" BorderBrush="Gray" Margin="0,0,0,5" Grid.Row="2" >
+                            <!--<DataGrid ItemsSource="{Binding HqList}" AutoGenerateColumns="False" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended"  IsReadOnly="True" FontSize="18" MouseDoubleClick="DataGrid_MouseDoubleClick" >
+
+                                <DataGrid.Columns>
+                                    -->
+                            <!--<DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button>Details</Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>-->
+                            <!--
+                                    <DataGridTextColumn Binding="{Binding SCode,Converter={StaticResource fnConverter}}" Header="代码" Width="6*"/>
+                                    <DataGridTextColumn Binding="{Binding BuyVol1 ,Converter={StaticResource valueConverter}}" Header="手" Foreground="Red"  Width="3*"/>
+                                    <DataGridTextColumn Binding="{Binding BuyPrice1,Converter={StaticResource valueConverter}}" Header="买一" Foreground="Red"  Width="6*"/>
+
+                                    <DataGridTextColumn Binding="{Binding SelPrice1,Converter={StaticResource valueConverter}}" Header="卖一" Foreground="Green"  Width="6*"/>
+                                    <DataGridTextColumn Binding="{Binding SelVol1,Converter={StaticResource valueConverter}}" Header="手" Foreground="Green" Width="3*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>-->
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Name="PairItem" Width="88" Header="配對"  Height="50" Style="{StaticResource TabItemExWithUnderLineStyle}" Cursor="Hand">
+                <Grid Background="White">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="6*"/>
+                        </Grid.RowDefinitions>
+                    </Grid>
+
+                    <Border BorderThickness="1" BorderBrush="Gray" Margin="0,0,0,5">
+                        <DockPanel LastChildFill="False">
+                            <Border BorderThickness="0" BorderBrush="Gray"  DockPanel.Dock="Top">
+                                <DockPanel Margin="20,10,20,10" VerticalAlignment="Bottom" >
+                                    <TextBox  DockPanel.Dock="Left" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   Margin="5" materialDesign:HintAssist.Hint="多头比例" FontSize="20" TextChanged="MinusChangedEvent">
+                                        <TextBox.Text>
+                                            <Binding  Path="LongRatio"  UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validationrules:NumberValidation ValidType="LongRatio" Ticks="1" Min="1" Max="10"  />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBox  DockPanel.Dock="Left" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   Margin="5" materialDesign:HintAssist.Hint="价格乘数" FontSize="20" TextChanged="MinusChangedEvent">
+                                        <TextBox.Text>
+                                            <Binding  Path="LongMultiplier"  UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validationrules:NumberValidation ValidType="LongMultiplier" Ticks="1" Min="1" Max="10"  />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <ComboBox materialDesign:HintAssist.Hint="多头代码" 
+                                          materialDesign:HintAssist.HintOpacity=".26"      
+                                          Foreground="Black"
+                                          ItemsSource="{Binding CodeList}"
+                                          SelectedItem="{Binding SelectedLongCodeItem}"
+                                          TextSearch.TextPath="Code"
+                                          IsEditable="True"  DockPanel.Dock="Left"
+                                          Margin="30,5,5,5"  SelectionChanged="ComboBox_SelectionChanged"
+                                          >
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--<VirtualizingStackPanel>-->
+                                                    <DockPanel LastChildFill="False">
+                                                        <TextBlock  DockPanel.Dock="Left" Text="{Binding Code}" FontSize="15"/>
+                                                        <TextBlock  DockPanel.Dock="Right" Text="{Binding Name}" FontSize="15"/>
+                                                    </DockPanel>
+                                                <!--</VirtualizingStackPanel>-->
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </DockPanel>
+                            </Border>
+                            <Border BorderThickness="0" BorderBrush="Gray"  DockPanel.Dock="Top">
+                                <DockPanel Margin="20,10,20,10" VerticalAlignment="Bottom" >
+                                    <TextBox  DockPanel.Dock="Left" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   Margin="5" materialDesign:HintAssist.Hint="空头比例" FontSize="20" TextChanged="MinusChangedEvent">
+                                        <TextBox.Text>
+                                            <Binding  Path="ShortRatio"  UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validationrules:NumberValidation ValidType="ShortRatio" Ticks="1" Min="1" Max="10"  />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBox  DockPanel.Dock="Left" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   Margin="5" materialDesign:HintAssist.Hint="价格乘数" FontSize="20" TextChanged="MinusChangedEvent">
+                                        <TextBox.Text>
+                                            <Binding  Path="ShortMultiplier"  UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validationrules:NumberValidation ValidType="ShortMultiplier" Ticks="1" Min="1" Max="10"  />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <ComboBox materialDesign:HintAssist.Hint="空头代码" 
+                                          materialDesign:HintAssist.HintOpacity=".26"      
+                                          Foreground="Black"
+                                          ItemsSource="{Binding CodeList}"
+                                          SelectedItem="{Binding SelectedShortCodeItem}"
+                                          TextSearch.TextPath="Code"
+                                          IsEditable="True"  DockPanel.Dock="Left"
+                                          SelectionChanged="ComboBox_SelectionChanged"
+                                          Margin="30,5,5,5"
+                                          >
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--<VirtualizingStackPanel>-->
+                                                    <DockPanel LastChildFill="False">
+                                                        <TextBlock  DockPanel.Dock="Left" Text="{Binding Code}" FontSize="15"/>
+                                                        <TextBlock  DockPanel.Dock="Right" Text="{Binding Name}" FontSize="15"/>
+                                                    </DockPanel>
+                                                <!--</VirtualizingStackPanel>-->
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </DockPanel>
+                            </Border>
+                            <DockPanel Margin="20,10,20,10" DockPanel.Dock="Top" VerticalAlignment="Bottom">
+                                <TextBlock DockPanel.Dock="Left" Text="价差:" FontSize="20" Foreground="Black" Margin="5,40,5,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <TextBox  
+                                    Text="{Binding Path=MinusPrice}" 
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    VerticalAlignment="Center" 
+                                    materialDesign:TextFieldAssist.SuffixText="{Binding CurrentMinusPrice}"
+                                    Margin="30,5,5,5" />
+                                <!--materialDesign:TextFieldAssist.SuffixText="{Binding CurrentMinusPrice}"-->
+                            </DockPanel>
+                            <DockPanel Margin="20,10,20,10" DockPanel.Dock="Top" VerticalAlignment="Bottom">
+                                <TextBlock DockPanel.Dock="Left" Text="对数:" FontSize="20" Foreground="Black" Margin="5,40,5,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <TextBox  Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="30,5,5,5">
+                                    <TextBox.Text>
+                                        <Binding  Path="Pairs"  UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:NumberValidation ValidType="Pairs"  Ticks="1" Min="1" Max="100"  />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </DockPanel>
+
+                            <CheckBox IsChecked="{Binding IsOnlyOpen}" DockPanel.Dock="Top" Margin="20,10,20,10"  materialDesign:CheckBoxAssist.CheckBoxSize="20" FontSize="20">只開倉不平倉</CheckBox>
+                            <Button Margin="20,10,20,50" materialDesign:ButtonAssist.CornerRadius="10"  DockPanel.Dock="Bottom" Command="{Binding PairCommonNewOrderCommand}">提交訂單</Button>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+            <TabItem Name="OtherItem" Width="88" Header="其他"  Height="50" Style="{StaticResource TabItemExWithUnderLineStyle}" Cursor="Hand" Visibility="Hidden">
+                <Grid Background="White">
+                    <TabControl TabStripPlacement="Left" >
+
+                        <TabItem Header="&#x0a;釣&#x0a;魚&#x0a;" Style="{StaticResource TabItemStyle}">
+
+                            <materialDesign:Card Padding="8">
+                                <DockPanel LastChildFill="False">
+                                    <StackPanel DockPanel.Dock="Top">
+                                        <TextBlock Margin="16 16 12 8" FontSize="16">參數設置 (買賣價格可編輯)</TextBlock>
+                                        <DataGrid  ItemsSource="{Binding FishList}" CanUserAddRows="False"  AutoGenerateColumns="False" SelectionUnit="Cell" SelectionMode="Extended">
+                                            <DataGrid.Columns>
+                                                <DataGridCheckBoxColumn CanUserSort="False"
+                                                    Binding="{Binding IsSelected , UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                                    ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}" />
+                                                <DataGridTextColumn Binding="{Binding SCode}" Header="代码" IsReadOnly="True"/>
+                                                <DataGridTextColumn Binding="{Binding PrePrice}" Header="前收" IsReadOnly="True"/>
+                                                <DataGridTextColumn Binding="{Binding BuyFishPrice}" Header="买价" IsReadOnly="False"/>
+                                                <DataGridTextColumn Binding="{Binding SellFishPrice}" Header="卖价" IsReadOnly="False"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </StackPanel>
+                                    <DockPanel Margin="20,50,20,50" DockPanel.Dock="Top">
+                                        <TextBlock DockPanel.Dock="Left" Text="数量:" FontSize="20" Foreground="Black" Margin="0 25 25 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" >
+                                            <TextBox.Text>
+                                                <Binding  Path="FishAmount"  UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <validationrules:NumberValidation ValidType="amount" Ticks="1" Min="1" Max="50"  />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
+                                    </DockPanel>
+
+                                    <CheckBox IsChecked="{Binding IsFishOk}" DockPanel.Dock="Top" Margin="20,50,20,50" Style="{StaticResource MaterialDesignUserForegroundCheckBox}" >
+                                        訂單要素已經確認正確無誤
+                                    </CheckBox>
+
+                                    <Button Margin="20,10,20,50" materialDesign:ButtonAssist.CornerRadius="10"  DockPanel.Dock="Bottom" Command="{Binding CommonSendFishOrders}" IsEnabled="{Binding IsFishOk}">提交訂單</Button>
+                                    <Button materialDesign:ButtonAssist.CornerRadius="10" DockPanel.Dock="Bottom" Margin="20,10,20,50" Command="{Binding CommonInitialFish}" Style="{StaticResource MaterialDesignRaisedAccentButton}">初始化</Button>
+
+                                </DockPanel>
+                            </materialDesign:Card>
+
+                        </TabItem>
+                    </TabControl>
+
+                </Grid>
+
+                <!--<Grid Background="White" x:Name="ConditionGrid">
+                    <materialDesign:DrawerHost
+                                Margin="1"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                BorderThickness="0"
+                                OverlayBackground ="{DynamicResource PrimaryHueMidBrush}"
+                                BorderBrush="{DynamicResource MaterialDesignDivider}">
+                        <materialDesign:DrawerHost.LeftDrawerContent>
+                            <DockPanel Margin="2" Width="288">
+                                <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                                    <TextBlock DockPanel.Dock="Left" Margin="20,10,20,10"  Text="When" FontSize="28" Style="{StaticResource MaterialDesignHeadline2TextBlock}"/>
+                                    <Button  DockPanel.Dock="Right"  Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"  CommandParameter="{x:Static Dock.Left}"  Margin="4" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignFlatButton}">
+                                        <materialDesign:PackIcon Kind="Close"  Height="24" Width="24" />
+                                    </Button>
+                                </DockPanel>
+                                
+                                <ComboBox materialDesign:HintAssist.Hint="条件代码" 
+                                          materialDesign:HintAssist.HintOpacity=".26"      
+                                          Foreground="Black"
+                                          ItemsSource="{Binding CodeList}"
+                                          SelectedItem="{Binding SelectedCodeItemCondition}"
+                                          TextSearch.TextPath="Code"
+                                          IsEditable="True"  DockPanel.Dock="Top"
+                                          Margin="20,10,20,10"
+                                          >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <TextBlock  Text="{Binding Code}" FontSize="20"/>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <ComboBox materialDesign:HintAssist.Hint="價格類型" DockPanel.Dock="Top" Margin="20,10,20,10">
+                                    <ComboBoxItem Content="最新价"/>
+                                    <ComboBoxItem Content="买一价"/>
+                                    <ComboBoxItem Content="卖一价"/>
+                                </ComboBox>
+                                <ComboBox materialDesign:HintAssist.Hint="條件" DockPanel.Dock="Top" Margin="20,10,20,10">
+                                    <ComboBoxItem Content="≥"/>
+                                    <ComboBoxItem Content="≤"/>
+                                </ComboBox>
+                                <TextBox DockPanel.Dock="Top" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="触发价" VerticalAlignment="Center" Margin="20,10,20,10">
+                                    <TextBox.Text>
+                                        <Binding  Path="CoinditionPrice"  UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:NumberValidation ValidType="price"  Ticks="0.005" Min="80" Max="120"  />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock DockPanel.Dock="Top" Margin="20,20,20,0"  Text="Then" FontSize="28" Style="{StaticResource MaterialDesignHeadline2TextBlock}"/>
+                                <DockPanel DockPanel.Dock="Top" Margin="20,10,20,10">
+                                    <ComboBox materialDesign:HintAssist.Hint="价格类型" DockPanel.Dock="Left" Margin="0,0,5,0" Width="88" FontSize="18">
+                                        <ComboBoxItem Content="最新价"/>
+                                        <ComboBoxItem Content="买一价"/>
+                                        <ComboBoxItem Content="卖一价"/>
+                                        <ComboBoxItem Content="限价"/>
+                                    </ComboBox>
+
+                                    <TextBox DockPanel.Dock="Right" Margin="5,0,0,28" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="限价" FontSize="28" VerticalAlignment="Center" >
+                                        <TextBox.Text>
+                                            <Binding  Path="CoinditionLimitPrice"  UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validationrules:NumberValidation ValidType="price"  Ticks="0.005" Min="80" Max="120"  />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </DockPanel>
+
+                                <ComboBox materialDesign:HintAssist.Hint="操作" DockPanel.Dock="Top" Margin="20,10,20,10">
+                                    <ComboBoxItem Content="买入" Background="#FF4500"/>
+                                    <ComboBoxItem Content="卖出" Background="#2E8B57"/>
+                                </ComboBox>
+                                <ComboBox materialDesign:HintAssist.Hint="交易代码" 
+                                          materialDesign:HintAssist.HintOpacity=".26"      
+                                          Foreground="Black"
+                                          ItemsSource="{Binding CodeList}"
+                                          SelectedItem="{Binding SelectedCodeItemCondition}"
+                                          TextSearch.TextPath="Code"
+                                          IsEditable="True"  DockPanel.Dock="Top"
+                                          Margin="20,10,20,10"
+                                          >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <TextBlock  Text="{Binding Code}" FontSize="20"/>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBox DockPanel.Dock="Top" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" materialDesign:HintAssist.Hint="数量" Margin="20,10,20,10">
+                                    <TextBox.Text>
+                                        <Binding  Path="ConditionAmount"  UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:NumberValidation ValidType="amount" Ticks="1" Min="1" Max="50"  />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <Button 
+                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                    materialDesign:ButtonProgressAssist.Value="-1"
+                                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                    materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                    Content="提交條件單"
+                                    Margin="20,10,20,10" />
+                                
+                            </DockPanel>
+                        </materialDesign:DrawerHost.LeftDrawerContent>
+                        <materialDesign:DrawerHost.RightDrawerContent>
+                            <DockPanel Margin="2" Width="288">
+                                <TextBlock DockPanel.Dock="Top" Margin="4"  HorizontalAlignment="Center" Text="新增多腿條件" />
+                                <Button   Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"  Content="關閉" CommandParameter="{x:Static Dock.Right}"  Margin="4" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignFlatButton}"/>
+                            </DockPanel>
+                        </materialDesign:DrawerHost.RightDrawerContent>
+                        <DockPanel >
+                            <Grid DockPanel.Dock="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="12*"/>
+                                    <ColumnDefinition Width="12*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button   Style="{StaticResource MaterialDesignRaisedLightButton}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"  CommandParameter="{x:Static Dock.Left}"     Grid.Column="0" Margin="4" Content="單腿條件" />
+                                <Button   Style="{StaticResource MaterialDesignRaisedAccentButton}"  Grid.Column="1" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"  CommandParameter="{x:Static Dock.Right}"   IsEnabled="False"  Margin="4" Content="多腿條件" />
+                            </Grid>
+                            <TextBlock Text="待觸發條件" Style="{StaticResource MaterialDesignHeadline5TextBlock}"  Margin="2" DockPanel.Dock="Top"/>
+                            <DataGrid >
+
+                            </DataGrid>
+                        </DockPanel>
+                    </materialDesign:DrawerHost>
+                </Grid>-->
+            </TabItem>
+        </TabControl>
+
+
+        <!--右边主界面布局-->
+        <Grid Grid.Column="2" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="17*"/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
+            <!--方向、配对订单栏-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding MainColWidth_0}" x:Name="MainCol_0"/>
+                    <ColumnDefinition Width="{Binding MainColWidth_1}" x:Name="MainCol_1"/>
+                </Grid.ColumnDefinitions>
+
+                <!--方向委托栏-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="6*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Top">
+                            <Button materialDesign:ButtonAssist.CornerRadius="10"  DockPanel.Dock="Left" Margin="2,2,20,0" Command="{Binding CommonCancelOrder}">撤銷所選訂單</Button>
+                            <Button materialDesign:ButtonAssist.CornerRadius="10" DockPanel.Dock="Right" Margin="20,2,10,0" Command="{Binding CommonCancelAllOrder}" Style="{StaticResource MaterialDesignRaisedAccentButton}">全撤</Button>
+                            <Border BorderThickness="1" BorderBrush="Gray" Margin="0,2,0,0">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+                                    <CheckBox x:Name="TodealsLongCheck" VerticalAlignment="Center"  Content="多头"  Checked="ToDealsFilter_Changed" Unchecked="ToDealsFilter_Changed" IsChecked="True" Margin="10,0,10,0"/>
+                                    <CheckBox x:Name="TodealsShortCheck" VerticalAlignment="Center"  Content="空头"  Checked="ToDealsFilter_Changed" Unchecked="ToDealsFilter_Changed" IsChecked="True" Margin="10,0,10,0"/>
+                                    <CheckBox x:Name="TodealsPairs" VerticalAlignment="Center"  Content="配對"  Checked="ToDealsFilter_Changed" Unchecked="ToDealsFilter_Changed" IsChecked="False" Margin="10,0,10,0"/>
+                                    <TextBox x:Name="TodealsBondName" 
+                                     CharacterCasing="Upper"
+                                     materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                                     materialDesign:HintAssist.Hint="证券代码模糊匹配" 
+                                     HorizontalAlignment="Center"
+                                     TextAlignment="Center"
+                                     FontSize="16"
+                                     VerticalAlignment="Center" Margin="10,0,10,0" TextChanged="ToDealsFilter_Changed" />
+                                </StackPanel>
+                            </Border>
+                        </DockPanel>
+
+                        <Border BorderThickness="1" BorderBrush="Gray">
+                            <DataGrid x:Name="AliveOrdersDataGrid" ItemsSource="{Binding Source={StaticResource ToDealsView}}" CanUserAddRows="False"  AutoGenerateColumns="False" SelectionUnit="Cell" SelectionMode="Extended">
+                                <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn CanUserSort="False"
+                                    Binding="{Binding IsSelected , UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}" />
+                                    <DataGridTextColumn Binding="{Binding code}" Header="代码" IsReadOnly="True"/>
+                                    <DataGridTextColumn  Header="方向"  IsReadOnly="True" Binding="{Binding entrust_direction}"/>
+                                    <DataGridTextColumn Binding="{Binding futures_direction}" Header="开平"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding entrust_price}" Header="委托价格"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding entrust_amount}" Header="委托数量"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding deal_amount}" Header="成交数量"  IsReadOnly="True"/>
+                                    <!--<DataGridTextColumn Binding="{Binding orderState}" Header="订单状态"  IsReadOnly="True"/>-->
+                                    <DataGridTextColumn Binding="{Binding entrust_no}" Header="订单编号"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding addInfo1}" Header="其他信息"  IsReadOnly="True"/>
+                                    <!--<DataGridTextColumn Binding="{Binding clordId}" Header="CLORDID"  IsReadOnly="True"/>-->
+                                    <DataGridTextColumn Binding="{Binding error_info}" Header="错误信息"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding addInfo3}" Header="發送時間"  IsReadOnly="True"/>
+                                </DataGrid.Columns>
+
+                            </DataGrid>
+                        </Border>
+                    </DockPanel>
+                    <DockPanel Grid.Row="1">
+                        <DockPanel DockPanel.Dock="Top">
+                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}"  Margin="0,0,20,0">结束委託</TextBlock>
+                            <Border BorderThickness="1" BorderBrush="Gray">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+                                    <CheckBox x:Name="FinishedLongCheck" VerticalAlignment="Center"  Content="多头"  Checked="FinishedFilter_Changed" Unchecked="FinishedFilter_Changed" IsChecked="True" Margin="10,0,10,0"/>
+                                    <CheckBox x:Name="FinishedShortCheck" VerticalAlignment="Center"  Content="空头"  Checked="FinishedFilter_Changed" Unchecked="FinishedFilter_Changed" IsChecked="True" Margin="10,0,10,0"/>
+                                    <CheckBox x:Name="FinishedDeal" VerticalAlignment="Center"  Content="成交"  Checked="FinishedFilter_Changed" Unchecked="FinishedFilter_Changed" IsChecked="True" Margin="10,0,10,0"/>
+                                    <CheckBox x:Name="FinishedWithdraw" VerticalAlignment="Center"  Content="撤销"  Checked="FinishedFilter_Changed" Unchecked="FinishedFilter_Changed" IsChecked="True" Margin="10,0,10,0"/>
+                                    <CheckBox x:Name="FinishedInvalid" VerticalAlignment="Center"  Content="废单"  Checked="FinishedFilter_Changed" Unchecked="FinishedFilter_Changed" IsChecked="True" Margin="10,0,10,0"/>
+                                    <CheckBox x:Name="FinishedPairs" VerticalAlignment="Center"  Content="配對"  Checked="FinishedFilter_Changed" Unchecked="FinishedFilter_Changed" IsChecked="False" Margin="10,0,10,0"/>
+                                    <TextBox x:Name="FinishedBondName" 
+                                     CharacterCasing="Upper"
+                                     materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                                     materialDesign:HintAssist.Hint="证券代码模糊匹配" 
+                                     HorizontalAlignment="Center"
+                                     TextAlignment="Center"
+                                     FontSize="16"
+                                     VerticalAlignment="Center" Margin="10,0,10,0" TextChanged="FinishedFilter_Changed" />
+                                </StackPanel>
+                            </Border>
+                        </DockPanel>
+                        <Border BorderThickness="1" BorderBrush="Gray">
+                            <DataGrid x:Name="FinishedDataGrid" ItemsSource="{Binding Source={StaticResource FinishedView}}" CanUserAddRows="False"  AutoGenerateColumns="False" SelectionUnit="Cell" SelectionMode="Extended">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding code}" Header="代码" IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding entrust_direction}" Header="方向"  IsReadOnly="True" />
+                                    <DataGridTextColumn Binding="{Binding futures_direction}" Header="开平"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding entrust_price}" Header="委托价格"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding entrust_amount}" Header="委托数量"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding deal_amount}" Header="成交数量"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding deal_price}" Header="成交均价"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding orderState}" Header="订单状态"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding entrust_no}" Header="订单编号"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding addInfo1}" Header="其他信息"  IsReadOnly="True"/>
+                                    <!--<DataGridTextColumn Binding="{Binding clordId}" Header="CLORDID"  IsReadOnly="True"/>-->
+
+                                    <DataGridTextColumn Binding="{Binding error_info}" Header="错误信息"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding addInfo3}" Header="發送時間"  IsReadOnly="True"/>
+                                </DataGrid.Columns>
+
+                            </DataGrid>
+                        </Border>
+                    </DockPanel>
+                </Grid>
+
+                <!--配对委托栏-->
+                <Grid Grid.Column="1">
+                    <Border BorderThickness="0" BorderBrush="Gray" >
+                        <DockPanel>
+                            <DockPanel DockPanel.Dock="Top">
+                                <Button materialDesign:ButtonAssist.CornerRadius="10"  DockPanel.Dock="Left" Margin="2,2,20,0" Command="{Binding CommonCancelPariOrder}">撤銷配對訂單</Button>
+                                <Button materialDesign:ButtonAssist.CornerRadius="10" DockPanel.Dock="Right" Margin="20,2,10,0" Command="{Binding CommonCancelAllPairsOrder}" Style="{StaticResource MaterialDesignRaisedAccentButton}">全撤</Button>
+                                <Border BorderThickness="1" BorderBrush="Gray" Margin="0,2,0,0">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+                                        <CheckBox x:Name="PairIsFinish" VerticalAlignment="Center"  Content="已結束"  Checked="Pairs_Changed" Unchecked="Pairs_Changed" IsChecked="True" Margin="10,0,10,0"/>
+                                        <CheckBox x:Name="PairIsUNFinish" VerticalAlignment="Center"  Content="未結束"  Checked="Pairs_Changed" Unchecked="Pairs_Changed" IsChecked="True" Margin="10,0,10,0"/>
+                                        <!--<CheckBox x:Name="PairIsDelete" VerticalAlignment="Center"  Content="撤销"  Checked="Pairs_Changed" Unchecked="Pairs_Changed" IsChecked="False" Margin="10,0,10,0"/>-->
+                                    </StackPanel>
+                                </Border>
+                            </DockPanel>
+
+                            <Border BorderThickness="1" BorderBrush="Gray">
+                                <DataGrid  x:Name="PairsDataGrid" ItemsSource="{Binding Source={StaticResource PairsView},UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False"  AutoGenerateColumns="False" SelectionUnit="Cell" SelectionMode="Extended" >
+                                    <!--<DataGrid  ItemsSource="{Binding PairList}" CanUserAddRows="False"  AutoGenerateColumns="False" SelectionUnit="Cell" SelectionMode="Extended">-->
+                                    <DataGrid.Columns>
+                                        <DataGridCheckBoxColumn CanUserSort="False"
+                                    Binding="{Binding IsSelected , UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}" />
+                                        <DataGridTemplateColumn Header="乘数比">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                                                        <TextBlock   Foreground="Red"   Text="{Binding LongMultiplier}"/>
+                                                        <TextBlock    Text=" : "/>
+                                                        <TextBlock   Foreground="Green"   Text="{Binding ShortMultiplier}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn Header="組合信息">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock   Foreground="Red"  Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding LongRatio}"/>
+                                                        <TextBlock   Foreground="Red"  Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text=" * "/>
+                                                        <TextBlock   Foreground="Red"  Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding LongCode}"/>
+                                                        <TextBlock   Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text=" - "/>
+                                                        <TextBlock   Foreground="Green"  Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding ShortRatio}"/>
+                                                        <TextBlock   Foreground="Green"  Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text=" * "/>
+                                                        <TextBlock   Foreground="Green"  Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding ShortCode}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+
+                                        <DataGridTextColumn Binding="{Binding Minus}" Header="委托价差"  IsReadOnly="True"/>
+                                        <DataGridTextColumn Binding="{Binding CurrentMinus}" Header="当前价差"  IsReadOnly="True"/>
+                                        <DataGridTextColumn Binding="{Binding MeanCost}" Header="成交价差"  IsReadOnly="True"/>
+
+
+
+                                        <!--<DataGridTextColumn Binding="{Binding Pairs}" Header="總對數"  IsReadOnly="True"/>-->
+                                        <!--<DataGridTextColumn Binding="{Binding FinishedPairs}" Header="已完成對數"  IsReadOnly="True"/>-->
+
+                                        <DataGridTemplateColumn Header="多頭成交">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock   Foreground="Red"  Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding FinishedLongLeg}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn Header="空頭成交">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock   Foreground="Green"  Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding FinishedShortLeg}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn Header="已成/對數" >
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate >
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock   Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding FinishedPairs}" />
+                                                        <TextBlock   Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="/"/>
+                                                        <TextBlock   Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding Pairs}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Header="進度">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <ProgressBar Value="{Binding Progress}" Height="10"  Margin="0,0,5,0" Width="88" materialDesign:TransitionAssist.DisableTransitions="True" />
+                                                        <TextBlock    Text="{Binding Progress}"/>
+                                                        <TextBlock    Text="%"/>
+                                                    </StackPanel>
+
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn Header="暂停发单">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <ToggleButton  Style="{StaticResource MaterialDesignSwitchToggleButton}"  IsChecked="{Binding IsPause, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <!--<DataGridTextColumn Binding="{Binding IsPause}" Header="是否暂停"  IsReadOnly="True"/>-->
+
+                                        <!--<DataGridTextColumn Binding="{Binding IsTrigger}" Header="是否触发"  IsReadOnly="True"/>-->
+                                        <!--<DataGridTextColumn Binding="{Binding IsDelete}" Header="是否撤銷"  IsReadOnly="True"/>-->
+
+                                        <DataGridTextColumn Binding="{Binding IsFinish}" Header="是否结束"  IsReadOnly="True"/>
+                                        <DataGridTextColumn Binding="{Binding IsDelete}" Header="是否撤单"  IsReadOnly="True"/>
+                                        <DataGridTextColumn Binding="{Binding OrderSendTime}" Header="發送時間"  IsReadOnly="True"/>
+                                        <DataGridTextColumn Binding="{Binding AddInfo2}" Header="其他信息"  IsReadOnly="True"/>
+                                    </DataGrid.Columns>
+
+                                </DataGrid>
+                            </Border>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+
+            </Grid>
+
+            <!--持仓、成本汇总行-->
+            <Grid  Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="12*"/>
+                </Grid.ColumnDefinitions>
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <TextBlock DockPanel.Dock="Left" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,20,0">持倉</TextBlock>
+                        <Border BorderThickness="1" BorderBrush="Gray">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+                                <CheckBox x:Name="amountCheck" VerticalAlignment="Center"  Content="显示0持仓"  Checked="Filter_Changed" Unchecked="Filter_Changed" IsChecked="False" Margin="2,0,2,0"/>
+                                <CheckBox x:Name="longCheck" VerticalAlignment="Center"  Content="多头"  Checked="Filter_Changed" Unchecked="Filter_Changed" IsChecked="True" Margin="2,0,2,0"/>
+                                <CheckBox x:Name="shortCheck" VerticalAlignment="Center"  Content="空头"  Checked="Filter_Changed" Unchecked="Filter_Changed" IsChecked="True" Margin="2,0,2,0"/>
+                                <TextBox x:Name="bondName" 
+                                     CharacterCasing="Upper"
+                                     materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                                     materialDesign:HintAssist.Hint="代码匹配" 
+                                     HorizontalAlignment="Center"
+                                     TextAlignment="Center"
+                                     FontSize="16"
+                                     VerticalAlignment="Center" Margin="0" TextChanged="Filter_Changed" />
+                            </StackPanel>
+
+                        </Border>
+                    </DockPanel>
+                    <Border BorderThickness="1" BorderBrush="Gray" Margin="0,0,0,5">
+                        <DataGrid x:Name="AccountDataGrid" ItemsSource="{Binding Source={StaticResource AccountView}}" AutoGenerateColumns="False" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended"  IsReadOnly="True" MouseDoubleClick="AccountDataGrid_MouseDoubleClick">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding out_stock_code}" Header="代码" />
+                                <DataGridTextColumn Binding="{Binding out_position_flag, Converter={StaticResource directionConverter}}" Header="方向" />
+                                <DataGridTextColumn Binding="{Binding out_enable_amount}" Header="可用持仓" />
+                                <DataGridTextColumn Binding="{Binding out_current_amount}" Header="总持仓" />
+
+                                <!--<DataGridTextColumn Binding="{Binding total_balance}" Header="总市值" />-->
+                                <!--<DataGridTextColumn Binding="{Binding out_current_cost_price}" Header="成本" />-->
+                                <!--<DataGridTextColumn Binding="{Binding update_time}" Header="更新时间" />-->
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </DockPanel>
+
+                <DockPanel Grid.Column="1"  Margin="5,0,0,0">
+                    <DockPanel DockPanel.Dock="Top">
+                        <TextBlock DockPanel.Dock="Left" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,20,0">當日方向成本匯總</TextBlock>
+                    </DockPanel>
+                    <Border BorderThickness="1" BorderBrush="Gray" Margin="0,0,0,5">
+                        <DataGrid ItemsSource="{Binding DirectionSummaryCollection}" AutoGenerateColumns="False" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended"  IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding code}" Header="代码" />
+                                <DataGridTextColumn Binding="{Binding direction}" Header="方向" />
+                                <DataGridTextColumn Binding="{Binding avgcostt}" Header="平均成本" />
+                                <DataGridTextColumn Binding="{Binding position}" Header="持仓" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </DockPanel>
+                <DockPanel Grid.Column="2"  Margin="5,0,0,0">
+                    <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,20,0">當日配對成本匯總</TextBlock>
+                        <TextBlock Margin="0,5,20,0" DockPanel.Dock="Right">
+                            <Hyperlink IsEnabled="False"  Style="{StaticResource MaterialDesignBody1Hyperlink}"> 更新頻率：3秒/次</Hyperlink>
+                        </TextBlock>
+                    </DockPanel>
+                    <Border BorderThickness="1" BorderBrush="Gray" Margin="0,0,0,5">
+                        <DataGrid ItemsSource="{Binding PariSummaryCollection}" AutoGenerateColumns="False" CanUserAddRows="False" SelectionUnit="Cell" SelectionMode="Extended"  IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="乘数比">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                                                <TextBlock   Foreground="Red"   Text="{Binding LongMultiplier}"/>
+                                                <TextBlock    Text=" : "/>
+                                                <TextBlock   Foreground="Green"   Text="{Binding ShortMultiplier}"/>
+                                            </StackPanel>
+
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Binding="{Binding combo}" Header="組合" />
+                                <DataGridTextColumn Binding="{Binding pairs}" Header="對數" />
+
+                                <DataGridTemplateColumn Header="多頭">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <!--<TextBlock   Foreground="Red"   Text="{Binding longPosition}"/>-->
+                                            <TextBlock   Foreground="Red"   Text="{Binding LongString}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Header="空頭">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <!--<TextBlock   Foreground="Green"   Text="{Binding shortPosition}"/>-->
+                                            <TextBlock   Foreground="Green"   Text="{Binding ShortString}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Binding="{Binding minus}" Header="平均基差" />
+
+                                <DataGridTemplateColumn Header="多头暴露">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock   Foreground="Red"   Text="{Binding LongExString}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Header="空头暴露">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock   Foreground="Green"   Text="{Binding ShortExString}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </DockPanel>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>
